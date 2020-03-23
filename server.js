@@ -12,6 +12,9 @@ const shopRoutes = require("./routes/shop");
 
 app.use(express.urlencoded( {extended: false }));
 
+//static files path:
+app.use(express.static(path.join(__dirname, "/public")));
+
 //end-points:
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
