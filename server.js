@@ -7,16 +7,16 @@ const express = require("express");
 const app = express();
 
 //Routes:
-const adminRoutes = require("./routes/admin");
+const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
 app.use(express.urlencoded( {extended: false }));
 
-//static files path:
+//static files path: to grant access to other folders:
 app.use(express.static(path.join(__dirname, "/public")));
 
 //end-points:
-app.use("/admin", adminRoutes);
+app.use("/admin", adminData.routes);
 app.use(shopRoutes);
 
 //Error page not found for undefined routes.
