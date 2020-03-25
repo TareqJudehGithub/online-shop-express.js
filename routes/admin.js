@@ -7,7 +7,8 @@ const rootDire = require("../util/path");
 const products = [];
 
 router.get("/add-product", (req, res, next) => {
-     res.sendFile(path.join(rootDire , "/views", "/add-product.html"));
+     //83.2 webpage title in the browser tab
+     res.render("add-product", { pageTitle: "Add Product" });
 });
 
 router.post("/add-product", (req, res, next) => {
