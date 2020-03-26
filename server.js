@@ -27,7 +27,7 @@ app.use(shopRoutes);
 //Error page not found for undefined routes.
 app.use("/",(req, res, next) => {
      //83.3
-     res.status(404).render("404");
+     res.status(404).render("404", {pageTitle: "Page not found"});
 });
 
 app.listen(4000, () => {

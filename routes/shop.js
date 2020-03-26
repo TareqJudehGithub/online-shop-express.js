@@ -12,7 +12,7 @@ router.get("/",(req, res, next) => {
     //The render method:
     //rendering the shop.pug file in views folder, using
     // the default templating engine (PUG) and then return (renders) that.
-    res.render("shop", {prods: products, docTitle: "Shop"} ); //81.1
+    res.render("shop", {prods: products, pageTitle: "Shop", path: "/"} ); //81.1
 
 });
 

@@ -8,7 +8,8 @@ const products = [];
 
 router.get("/add-product", (req, res, next) => {
      //83.2 webpage title in the browser tab
-     res.render("add-product", { pageTitle: "Add Product" });
+     res.render("add-product",
+     { pageTitle: "Add Product", path: "/admin/add-product" });
 });
 
 router.post("/add-product", (req, res, next) => {
