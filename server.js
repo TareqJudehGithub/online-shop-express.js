@@ -6,29 +6,30 @@ const express = require("express");
 
 const app = express();
 
-//pug 80.1
+const errorController = require("./controllers/404");
 
-app.set("view engine", "pug");
-app.set("views", "views");
+//EJS 1. setup:
+app.set("view engine", "ejs");
+app.set("views", "views"); //for the views folder
 
 //Routes:
-const adminData = require("./routes/admin");
+const adminRoute = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
+//middlwares:
 app.use(express.urlencoded( {extended: false }));
 
 //static files path: to grant access to other folders:
 app.use(express.static(path.join(__dirname, "/public")));
 
 //end-points:
-app.use("/admin", adminData.routes);
+app.use(adminRoute);
 app.use(shopRoutes);
 
 //Error page not found for undefined routes.
-app.use("/",(req, res, next) => {
-     //83.3
-     res.status(404).render("404", {pageTitle: "Page not found"});
-});
+app.use(errorController.get404);
+
+
 
 app.listen(4000, () => {
      app.listen()
