@@ -29,6 +29,9 @@ module.exports = class Product {
      };
      
      save() {
+          //creating new id property 
+          this.id = Math.floor(Math.random()*1000 + 1).toString();
+
           getProductsFromFile(products => {
                products.push(this); //this refers to the class.
                fs.writeFile(p, JSON.stringify(products), err => {
@@ -39,5 +42,13 @@ module.exports = class Product {
      //calling Product class directly:
      static fetchAll(cb) {
         getProductsFromFile(cb);
+     };
+
+     static findById(id, cb) {   // id: get an id as an arguement,
+     //and a cb which will be executed right after finding a product.
+     getProductsFromFile(products => {
+          const product = products.find(p =>  p.id === id);
+          cb(product);
+     });
      };
 };

@@ -15,20 +15,34 @@ exports.getProducts = (req, res, next) => {
                }); 
      }); 
 };
-
+ exports.getProductById = (req, res, next) => {
+  //* The name we use after params is the name we used
+     //in the route in /routes/shop.js
+     const prodId = req.params.id;
+     Product.findById(prodId, product => {
+          res.render(
+               "shop/product-detail.ejs",
+               {
+                    productName: product,
+                    pageTitle: product.title,
+                    path: "/products"
+                    
+                    
+               })
+     });
+ };
  exports.getIndex = (req, res, next) => {
      Product.fetchAll(products => {
           res.render(
                "shop/index.ejs",
                {
+                    prods: products,
                     pageTitle: "Shop",
-                    path: "/",
-                    prods: products
+                    path: "/"
+                    
                });
      });
-     
  };
-
  exports.getCart = (req, res, next) => {
       res.render(
            "shop/cart.ejs",
