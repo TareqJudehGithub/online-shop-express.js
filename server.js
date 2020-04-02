@@ -3,10 +3,7 @@ const path = require("path");
 
 //Express Server setup
 const express = require("express");
-
 const app = express();
-
-const errorController = require("./controllers/404");
 
 //EJS 1. setup:
 app.set("view engine", "ejs");
@@ -15,6 +12,7 @@ app.set("views", "views"); //for the views folder
 //Routes:
 const adminRoute = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+const errorController = require("./controllers/404");
 
 //middlwares:
 app.use(express.urlencoded( {extended: false }));

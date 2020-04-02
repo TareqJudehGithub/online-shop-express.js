@@ -20,14 +20,18 @@ const getProductsFromFile = (cb) => {
 }
 
 module.exports = class Product {
-     constructor(props) {
-          this.title = props;
+     constructor(title, imageUrl, price, description) {
+          this.title = title;
+          this.imageUrl = imageUrl;
+          this.price = price;
+          this.description = description;
+          
      };
      
      save() {
           getProductsFromFile(products => {
                products.push(this); //this refers to the class.
-               fs.writeFile(p, JSON.stringify(products), (err) => {
+               fs.writeFile(p, JSON.stringify(products), err => {
                      console.log(err);
                }); 
           });     
