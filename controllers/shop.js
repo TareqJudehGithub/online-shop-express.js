@@ -1,5 +1,6 @@
-//importing class Product from /modules folder:
+//imports:
 const Product = require("../models/products");
+const Cart = require("../models/cart");
 
 //users routes:
 exports.getProducts = (req, res, next) => {
@@ -23,12 +24,11 @@ exports.getProducts = (req, res, next) => {
           res.render(
                "shop/product-detail.ejs",
                {
-                    productName: product,
+                    product: product,
                     pageTitle: product.title,
-                    path: "/products"
-                    
-                    
-               })
+                    path: "/products"         
+               });
+          console.log(product.price);
      });
  };
  exports.getIndex = (req, res, next) => {
@@ -51,6 +51,15 @@ exports.getProducts = (req, res, next) => {
                path: "/cart",     
            })
  };
+ exports.postCart = (req, res, next) => {
+     const prodId = req.body.Id;
+     Product.findById(prodId, product => {
+     Cart.addProduct(prodId, product.price);
+     console.log(product.price);
+      }); 
+     res.redirect("/cart");
+   };
+   
  exports.getOrders = (req, res, next) => {
      res.render(
           "shop/orders.ejs",
