@@ -3,6 +3,35 @@
 
 <body>
      <%- include("../includes/navigation.ejs") %>
-     <h2>Shopping Cart</h2>
+     <link rel="stylesheet" href="/css/product.css">
+     <main class="grid centered">
+          
+          <% if (products.length > 0 ) { %>
+               <ul class="">
+                    <% products.map(prod => { %>
+                         <h2>Shopping Cart</h2>
+                         <li class="product__cart centered card">
+                              <!-- productData from getCart route in /controllers/shop.js -->
+     
+                              <p>
+                                   <%= prod.productData.title%>
+                              </p>
+                              <p>
+                                   <img src="<%=prod.productData.imageUrl%>" height="100px" width="100px" alt="<%= prod.productData.title%>"> 
+                              </p>
+                              <p>
+                                   <%= prod.qty%>
+                              </p>
+                              <form action="/cart-delete-item" method="POST">
+                                   <input type="hidden" name="id" value="<%= prod.productData.id%>">
+                                   <button class="btn" type="submit">Delete</button>
+                              </form>
+                         </li>
+                    <% })%>
+               </ul>
+          <%}else{%>
+               <h2>Cart is empty</h2>
+          <%}%>
+     </main>
 
 <%- include("../includes/end.ejs") %>

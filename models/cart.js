@@ -32,7 +32,9 @@ module.exports = class Cart {
               updatedProduct = { id: id, qty: 1 };
               cart.products = [...cart.products, updatedProduct];
             }
-            cart.totalPrice = cart.totalPrice + +productPrice;
+            const parseProductPrice = parseFloat(productPrice);
+            cart.totalPrice = parseFloat(cart.totalPrice+ parseProductPrice);
+
             fs.writeFile(p, JSON.stringify(cart), err => {
               console.log(err);
             });
@@ -66,7 +68,8 @@ module.exports = class Cart {
             item.id !== id);  
 
           //to calculate total price after deleting an item:
-          updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty;
+          const parseProductPrice = parseFloat(productPrice)
+          updatedCart.totalPrice = updatedCart.totalPrice.toFixed(2) - parseProductPrice * productQty;
           
           //save changes to file:
           fs.writeFile(p, JSON.stringify(updatedCart), err => {
@@ -74,14 +77,23 @@ module.exports = class Cart {
           });     
         })
       }
+      
+    //show cart in /cart:
       static getCart(cb) {
+        //read file:
         fs.readFile(p, (err, fileContent) => {
+          //cart:
           const cart = JSON.parse(fileContent);
-          if (err) {
-            cb(null);
-          } else {
-            cb(cart);
+
+          if(err) {
+            cb(null)
           }
+          else {
+            //returning the cart in the callback:
+          cb(cart);
+          }
+         
         });
       }
 };
+

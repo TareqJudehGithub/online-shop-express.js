@@ -9,6 +9,7 @@
      width: 20rem;
      max-width: 95%;
      margin: 1rem;
+   
  }
  
  .product__title {
@@ -24,4 +25,13 @@
  
  .product__description {
      text-align: center;
+ }
+ .product__cart, p {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    padding: 15px;
+
+
  }
