@@ -1,5 +1,8 @@
+//imports:
 const fs = require("fs");
 const path = require("path");
+const Cart = require("./cart");
+
 
 const p = path.join(
      path.dirname(process.mainModule.filename), 
@@ -51,6 +54,29 @@ module.exports = class Product {
                };
           });     
      };
+
+     static deleteById(id) {
+         getProductsFromFile(products => {
+              //extracting the product (to fetch price for Cart.deleteProdcut below),
+               //before removal:
+              const product = products.find(item => item.id === id);
+               
+              //del item by Id
+              const updatedProducts = products.filter(item => 
+               item.id !== id
+               );
+               if(updatedProducts){
+                    console.log(`deleting item ${product.title} from Shop.`)
+               }
+              fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+               if(!err){
+                    //del item also from the Cart, and also update the cart total price:
+                    Cart.deleteProduct(id, product.price);  
+                    console.log(`deleting item ${product.title} from cart.`)              
+                }      
+              });
+         });   
+     };
      //calling Product class directly:
      static fetchAll(cb) {
         getProductsFromFile(cb);
@@ -59,7 +85,7 @@ module.exports = class Product {
      static findById(id, cb) {   // id: get an id as an arguement,
      //and a cb which will be executed right after finding a product.
      getProductsFromFile(products => {
-          const product = products.find(p =>  p.id === id);
+          const product = products.find(item =>  item.id === id);
           cb(product);
      });
      };
