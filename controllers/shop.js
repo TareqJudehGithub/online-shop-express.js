@@ -4,44 +4,47 @@ const Cart = require("../models/cart");
 
 //users routes:
 exports.getProducts = (req, res, next) => {
-     
-     //to fetch/get all products:
-     Product.fetchAll((products) => {
-          res.render(
-               "shop/product-list.ejs",
-               {
-                    prods: products,
-                    pageTitle: "Products List", 
-                    path: "/products"
-               }); 
-     }); 
+     Product.fetchAll()
+          .then(([rows]) => {
+               res.render(
+                    "shop/product-list.ejs",
+                    {
+                         prods: rows,
+                         pageTitle: "Products List",
+                         path: "/products"
+                    });
+          })
+          .catch(err => console.log("Products List Error!", err));
 };
- exports.getProductById = (req, res, next) => {
-  //* The name we use after params is the name we used
-     //in the route in /routes/shop.js
+
+exports.getProductById = (req, res, next) => {
      const prodId = req.params.id;
-     Product.findById(prodId, product => {
-          res.render(
-               "shop/product-detail.ejs",
-               {
-                    product: product,
-                    pageTitle: product.title,
-                    path: "/products"         
-               });
-          console.log(product.price);
-     });
- };
+     Product.findById(prodId)
+          .then(([product]) => {
+               res.render(
+                    "shop/product-detail.ejs",
+                    {
+                         product: product[0],
+                         pageTitle: "Product Details",
+                         path: "/products"
+                    }
+               );
+          })
+          .catch(err => console.log(err));
+};
+
  exports.getIndex = (req, res, next) => {
-     Product.fetchAll(products => {
-          res.render(
-               "shop/index.ejs",
-               {
+     Product.fetchAll()
+          .then(( [products] ) => {
+               res.render(
+                    "shop/index.ejs",
+                    {
                     prods: products,
                     pageTitle: "Shop",
                     path: "/"
-                    
                });
-     });
+          })
+          .catch(err => console.log(err));
  };
  exports.getCart = (req, res, next) => {
      Cart.getCart(cart => {   //test if this is the same cart var in cart.js

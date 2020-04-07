@@ -5,6 +5,9 @@ const path = require("path");
 const express = require("express");
 const app = express();
 
+//database connection pool:
+const db = require("./util/database");
+
 //EJS 1. setup:
 app.set("view engine", "ejs");
 app.set("views", "views"); //for the views folder
@@ -13,6 +16,8 @@ app.set("views", "views"); //for the views folder
 const adminRoute = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/404");
+
+
 
 //middlwares:
 app.use(express.urlencoded( {extended: false }));

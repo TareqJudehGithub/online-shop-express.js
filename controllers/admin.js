@@ -6,16 +6,18 @@ const Cart = require("../models/cart");
 //admin routes:
 exports.postAddProduct = (req, res, next) => {
      
-     // const id = req.body.id;
      const title = req.body.title;
      const imageUrl = req.body.imageUrl;
      const price = req.body.price;
      const description = req.body.description;
      
-     const product = new Product(null, title, imageUrl, price, description);
- 
-     product.save(); //this will call the save() we defined in /models/products.
-     res.redirect("/");
+     const product = new Product(null, title, price, description, imageUrl);
+     product
+     .save()
+     .then(() =>{
+          res.redirect("/");
+     }) 
+     .catch(err => console.log( err));
 };
 
 exports.getAddProduct = (req, res, next) => {
@@ -51,12 +53,14 @@ exports.getAddProduct = (req, res, next) => {
                });
      })
   };
+
 //construct a new produt by editing (replacing) the original product:
   exports.postEditProduct = (req, res, next) => {
        const { id, title, imageUrl, price, description } = req.body;
      
 //passing prodId will ensure in the model/product.js, in getProductsFromFile,
 // we will fetch the right ID from if statement(updating mode):
+
      const updatedProduct = new Product(id, title, imageUrl, price, description);
      updatedProduct.save();
      res.redirect("/admin/products");
